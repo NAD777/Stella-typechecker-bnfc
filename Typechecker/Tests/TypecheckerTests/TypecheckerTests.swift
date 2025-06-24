@@ -1,9 +1,9 @@
 import XCTest
 import Stella
-@testable import stella_implementation_in_swift
+@testable import Typechecker
 
-final class stella_implementation_in_swiftTests: XCTestCase {
-  
+final class TypecheckerTests: XCTestCase {
+
   // MARK: - Tests
   func testRunInput() {
     let resourcePath = "\(Bundle.module.resourcePath!)/Resources"
@@ -12,7 +12,7 @@ final class stella_implementation_in_swiftTests: XCTestCase {
       print("------------------------------------------------------------")
       print("Test run: Typechecking file <\(filepath.split(separator: "/").last!)>")
       do {
-        try stella_implementation_in_swift.typecheck_file(filepath: filepath)
+        try Typechecker.typecheckFile(filepath: filepath)
         print("Test run: Program is well-typed!")
       } catch let error {
         print("Test run: TypecheckError \(error) \n\(error.localizedDescription)")
@@ -242,7 +242,7 @@ final class stella_implementation_in_swiftTests: XCTestCase {
   private func checkWellTyped(filepaths: [String]) {
     for filepath in filepaths {
       print("Typechecking file <\(filepath.split(separator: "/").last!)>")
-      XCTAssertNoThrow(try stella_implementation_in_swift.typecheck_file(filepath: filepath))
+      XCTAssertNoThrow(try Typechecker.typecheckFile(filepath: filepath))
       print()
     }
   }
@@ -251,7 +251,7 @@ final class stella_implementation_in_swiftTests: XCTestCase {
     for filepath in filepaths {
       print("Typechecking file <\(filepath.split(separator: "/").last!)>")
       XCTAssertThrowsError(
-        try stella_implementation_in_swift.typecheck_file(filepath: filepath)
+        try Typechecker.typecheckFile(filepath: filepath)
       ) { error in
         print(error.localizedDescription)
       }

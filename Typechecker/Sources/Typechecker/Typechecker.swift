@@ -6,12 +6,12 @@ enum ParserError: Error {
 }
 
 @main
-public struct stella_implementation_in_swift {
+public struct Typechecker {
   
-  public static func typecheck_file(filepath: String) throws {
+  public static func typecheckFile(filepath: String) throws {
     let fileContent = try String(contentsOfFile: filepath)
 
-    let programResult = getAst(from: fileContent)
+    let programResult = ast(from: fileContent)
 
     guard case .success(let program) = programResult else {
       throw ParserError.sourceCodeParsingError
@@ -24,7 +24,7 @@ public struct stella_implementation_in_swift {
     assert(CommandLine.arguments[1] == "typecheck")
 
     do {
-      try typecheck_file(filepath: CommandLine.arguments[2])
+      try typecheckFile(filepath: CommandLine.arguments[2])
     } catch {
       print(error)
       print("Parse Error occurred. See the message above.")

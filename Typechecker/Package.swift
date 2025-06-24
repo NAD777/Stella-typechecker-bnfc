@@ -4,17 +4,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "stella-implementation-in-swift",
+    name: "Typechecker",
     dependencies: [
       .package(name: "Stella", path: "../Stella")
     ],
     targets: [
         .executableTarget(
-            name: "stella-implementation-in-swift",
+            name: "Typechecker",
             dependencies: ["Stella"]),
         .testTarget(
-            name: "stella-implementation-in-swiftTests",
-            dependencies: ["stella-implementation-in-swift"],
+            name: "TypecheckerTests",
+            dependencies: ["Typechecker"],
             resources: [
                 .copy("Resources"),
               ])

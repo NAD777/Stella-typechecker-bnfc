@@ -2,7 +2,7 @@
 
 import Antlr4
 
-public func getAst(from text: String) -> Result<Program, Error> {
+public func ast(from text: String) -> Result<Program, Error> {
   let input = ANTLRInputStream(text)
   let lexer = StellaLexer(input)
   let tokens = CommonTokenStream(lexer)

@@ -17,7 +17,7 @@ func typeForFunction(paramDecls: [ParamDecl], returnType: Type_?) throws -> Type
     throw TypecheckError.onlyOneArgument
   }
   
-  return .TypeFun(paramDecls.map { $0.type }, returnType)
+  return .typeFun(paramDecls.map { $0.type }, returnType)
 }
 
 func assertEqual(expected: Type_?, given: Type_) throws {
@@ -32,10 +32,10 @@ func isExhaustive(exprType: Type_, casePatterns: [Pattern]) -> Bool {
   // Convert the list of patterns to their respective types for comparison.
   let types = casePatterns.map { pattern -> String in
     switch pattern {
-      case .PatternVariant(let label, _): return "PatternVariant:\(label)"
-      case .PatternInl: return "PatternInl"
-      case .PatternInr: return "PatternInr"
-      case .PatternVar(_): return "PatternVar"
+      case .patternVariant(let label, _): return "PatternVariant:\(label)"
+      case .patternInl: return "PatternInl"
+      case .patternInr: return "PatternInr"
+      case .patternVar(_): return "PatternVar"
       default: return "OtherPattern"
     }
   }
@@ -47,14 +47,14 @@ func isExhaustive(exprType: Type_, casePatterns: [Pattern]) -> Bool {
 
   // Check the type of exprType.
   switch exprType {
-    case .TypeSum:
+    case .typeSum:
       // For sum types, both inl and inr patterns must be present.
       return types.contains("PatternInl") && types.contains("PatternInr")
 
-    case .TypeVariant(let fieldTypes):
+    case .typeVariant(let fieldTypes):
       // Identifying the used pattern labels for variant types.
       let usedPatternLabels: Set<String> = Set(casePatterns.compactMap { pattern in
-        if case let .PatternVariant(label, _) = pattern {
+        if case let .patternVariant(label, _) = pattern {
           return label.value
         }
         return nil
@@ -77,7 +77,7 @@ func isExhaustive(exprType: Type_, casePatterns: [Pattern]) -> Bool {
 extension VariantFieldType {
   var label: String {
     switch self {
-      case let .AVariantFieldType(label, _):
+      case let .aVariantFieldType(label, _):
         label.value
     }
   }
@@ -86,14 +86,14 @@ extension VariantFieldType {
 extension ParamDecl {
   var name: String {
     switch self {
-      case let .AParamDecl(name, type):
+      case let .aParamDecl(name, type):
         name.value
     }
   }
 
   var type: Type_ {
     switch self {
-      case .AParamDecl(let stellaIdentToken, let type_):
+      case .aParamDecl(let stellaIdentToken, let type_):
         type_
     }
   }
@@ -102,9 +102,9 @@ extension ParamDecl {
 extension ReturnType {
   var type: Type_? {
     switch self {
-      case .NoReturnType:
+      case .noReturnType:
         return nil
-      case .SomeReturnType(let type_):
+      case .someReturnType(let type_):
         return type_
     }
   }
@@ -113,7 +113,7 @@ extension ReturnType {
 extension Program {
   var decls: [Decl] {
     switch self {
-      case .AProgram(_, _, let decls):
+      case .aProgram(_, _, let decls):
         decls
     }
   }
@@ -122,14 +122,14 @@ extension Program {
 extension MatchCase {
   var pattern: Pattern {
     switch self {
-      case .AMatchCase(let pattern, _):
+      case .aMatchCase(let pattern, _):
         return pattern
     }
   }
 
   var expr: Expr {
     switch self {
-      case .AMatchCase(_, let expr):
+      case .aMatchCase(_, let expr):
         return expr
     }
   }
@@ -138,14 +138,14 @@ extension MatchCase {
 extension Binding {
   var name: String {
     switch self {
-      case .ABinding(let stellaIdentToken, _):
+      case .aBinding(let stellaIdentToken, _):
         stellaIdentToken.value
     }
   }
 
   var rhs: Expr {
     switch self {
-      case .ABinding(_, let expr):
+      case .aBinding(_, let expr):
         expr
     }
   }
@@ -154,14 +154,14 @@ extension Binding {
 extension RecordFieldType {
   var label: String {
     switch self {
-      case .ARecordFieldType(let stellaIdentToken, let type_):
+      case .aRecordFieldType(let stellaIdentToken, let type_):
         stellaIdentToken.value
     }
   }
 
   var type: Type_ {
     switch self {
-      case .ARecordFieldType(_, let type_):
+      case .aRecordFieldType(_, let type_):
         type_
     }
   }
@@ -170,7 +170,7 @@ extension RecordFieldType {
 extension VariantFieldType {
   var type: Type_? {
     switch self {
-      case .AVariantFieldType(_, let optionalTyping):
+      case .aVariantFieldType(_, let optionalTyping):
         optionalTyping.type
     }
   }
@@ -179,9 +179,9 @@ extension VariantFieldType {
 extension OptionalTyping {
   var type: Type_? {
     switch self {
-      case .NoTyping:
+      case .noTyping:
         return nil
-      case .SomeTyping(let type_):
+      case .someTyping(let type_):
         return type_
     }
   }
@@ -190,9 +190,9 @@ extension OptionalTyping {
 extension ExprData {
   var expr: Expr? {
     switch self {
-      case .NoExprData:
+      case .noExprData:
         return nil
-      case .SomeExprData(let expr):
+      case .someExprData(let expr):
         return expr
     }
   }
@@ -201,14 +201,14 @@ extension ExprData {
 extension PatternBinding {
   var pattern: Pattern {
     switch self {
-      case .APatternBinding(let pattern, _):
+      case .aPatternBinding(let pattern, _):
         pattern
     }
   }
 
   var rhs: Expr {
     switch self {
-      case .APatternBinding(_, let rhs):
+      case .aPatternBinding(_, let rhs):
         rhs
     }
   }
@@ -217,9 +217,9 @@ extension PatternBinding {
 extension PatternData {
   var pattern: Pattern? {
     switch self {
-      case .NoPatternData:
+      case .noPatternData:
         return nil
-      case .SomePatternData(let pattern):
+      case .somePatternData(let pattern):
         return pattern
     }
   }

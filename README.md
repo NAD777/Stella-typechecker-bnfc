@@ -1,5 +1,5 @@
 # Stella in Swift
-Template for an implementation of Stella in Swift.
+Implementation of Stella Typecheker in Swift using BNFC to generate AST from LBNF grammar
 
 ![Screenshot from XCode.](Images/xcode-demo.jpeg)
 

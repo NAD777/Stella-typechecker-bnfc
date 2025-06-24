@@ -33,7 +33,7 @@ func buildProgram(_ ctx: StellaParser.ProgramContext) throws -> Program {
       let languagedecl = try buildLanguageDecl(ctx.p_1_1)
       let listextension = try buildExtensionList(ctx.p_1_2)
       let listdecl = try buildDeclList(ctx.p_1_3)
-      return .AProgram(languagedecl, listextension, listdecl)
+      return .aProgram(languagedecl, listextension, listdecl)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ProgramContext")
   }
@@ -58,7 +58,7 @@ func buildStellaIdentTokenList(_ ctx: StellaParser.ListStellaIdentContext) throw
 func buildLanguageDecl(_ ctx: StellaParser.LanguageDeclContext) throws -> LanguageDecl {
   switch ctx {
     case let ctx as StellaParser.LanguageCoreContext:
-      return .LanguageCore
+      return .languageCore
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of LanguageDeclContext")
   }
@@ -68,7 +68,7 @@ func buildExtension(_ ctx: StellaParser.ExtensionContext) throws -> Extension_ {
   switch ctx {
     case let ctx as StellaParser.AnExtensionContext:
       let listextensionname = try buildExtensionNameTokenList(ctx.p_1_3)
-      return .AnExtension(listextensionname)
+      return .anExtension(listextensionname)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ExtensionContext")
   }
@@ -113,7 +113,7 @@ func buildDecl(_ ctx: StellaParser.DeclContext) throws -> Decl {
       let throwtype = try buildThrowType(ctx.p_1_8)
       let listdecl = try buildDeclList(ctx.p_1_10)
       let expr = try buildExpr(ctx.p_1_12)
-      return .DeclFun(listannotation, stellaident, listparamdecl, returntype, throwtype, listdecl, expr)
+      return .declFun(listannotation, stellaident, listparamdecl, returntype, throwtype, listdecl, expr)
     case let ctx as StellaParser.DeclFunGenericContext:
       let listannotation = try buildAnnotationList(ctx.p_2_1)
       let stellaident = try buildStellaIdentToken(ctx.p_2_4)
@@ -123,18 +123,18 @@ func buildDecl(_ ctx: StellaParser.DeclContext) throws -> Decl {
       let throwtype = try buildThrowType(ctx.p_2_12)
       let listdecl = try buildDeclList(ctx.p_2_14)
       let expr = try buildExpr(ctx.p_2_16)
-      return .DeclFunGeneric(listannotation, stellaident, liststellaident, listparamdecl, returntype, throwtype, listdecl, expr)
+      return .declFunGeneric(listannotation, stellaident, liststellaident, listparamdecl, returntype, throwtype, listdecl, expr)
     case let ctx as StellaParser.DeclTypeAliasContext:
       let stellaident = try buildStellaIdentToken(ctx.p_3_2)
       let type_ = try buildType(ctx.p_3_4)
-      return .DeclTypeAlias(stellaident, type_)
+      return .declTypeAlias(stellaident, type_)
     case let ctx as StellaParser.DeclExceptionTypeContext:
       let type_ = try buildType(ctx.p_4_4)
-      return .DeclExceptionType(type_)
+      return .declExceptionType(type_)
     case let ctx as StellaParser.DeclExceptionVariantContext:
       let stellaident = try buildStellaIdentToken(ctx.p_5_3)
       let type_ = try buildType(ctx.p_5_5)
-      return .DeclExceptionVariant(stellaident, type_)
+      return .declExceptionVariant(stellaident, type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of DeclContext")
   }
@@ -157,7 +157,7 @@ func buildLocalDecl(_ ctx: StellaParser.LocalDeclContext) throws -> LocalDecl {
   switch ctx {
     case let ctx as StellaParser.ALocalDeclContext:
       let decl = try buildDecl(ctx.p_1_1)
-      return .ALocalDecl(decl)
+      return .aLocalDecl(decl)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of LocalDeclContext")
   }
@@ -179,7 +179,7 @@ func buildLocalDeclList(_ ctx: StellaParser.ListLocalDeclContext) throws -> [Loc
 func buildAnnotation(_ ctx: StellaParser.AnnotationContext) throws -> Annotation {
   switch ctx {
     case let ctx as StellaParser.InlineAnnotationContext:
-      return .InlineAnnotation
+      return .inlineAnnotation
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of AnnotationContext")
   }
@@ -203,7 +203,7 @@ func buildParamDecl(_ ctx: StellaParser.ParamDeclContext) throws -> ParamDecl {
     case let ctx as StellaParser.AParamDeclContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_1)
       let type_ = try buildType(ctx.p_1_3)
-      return .AParamDecl(stellaident, type_)
+      return .aParamDecl(stellaident, type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ParamDeclContext")
   }
@@ -228,10 +228,10 @@ func buildParamDeclList(_ ctx: StellaParser.ListParamDeclContext) throws -> [Par
 func buildReturnType(_ ctx: StellaParser.ReturnTypeContext) throws -> ReturnType {
   switch ctx {
     case let ctx as StellaParser.NoReturnTypeContext:
-      return .NoReturnType
+      return .noReturnType
     case let ctx as StellaParser.SomeReturnTypeContext:
       let type_ = try buildType(ctx.p_2_2)
-      return .SomeReturnType(type_)
+      return .someReturnType(type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ReturnTypeContext")
   }
@@ -240,10 +240,10 @@ func buildReturnType(_ ctx: StellaParser.ReturnTypeContext) throws -> ReturnType
 func buildThrowType(_ ctx: StellaParser.ThrowTypeContext) throws -> ThrowType {
   switch ctx {
     case let ctx as StellaParser.NoThrowTypeContext:
-      return .NoThrowType
+      return .noThrowType
     case let ctx as StellaParser.SomeThrowTypeContext:
       let listtype = try buildType9List(ctx.p_2_2)
-      return .SomeThrowType(listtype)
+      return .someThrowType(listtype)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ThrowTypeContext")
   }
@@ -277,7 +277,7 @@ func buildMatchCase(_ ctx: StellaParser.MatchCaseContext) throws -> MatchCase {
     case let ctx as StellaParser.AMatchCaseContext:
       let pattern = try buildPattern(ctx.p_1_1)
       let expr = try buildExpr(ctx.p_1_3)
-      return .AMatchCase(pattern, expr)
+      return .aMatchCase(pattern, expr)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of MatchCaseContext")
   }
@@ -302,10 +302,10 @@ func buildMatchCaseList(_ ctx: StellaParser.ListMatchCaseContext) throws -> [Mat
 func buildOptionalTyping(_ ctx: StellaParser.OptionalTypingContext) throws -> OptionalTyping {
   switch ctx {
     case let ctx as StellaParser.NoTypingContext:
-      return .NoTyping
+      return .noTyping
     case let ctx as StellaParser.SomeTypingContext:
       let type_ = try buildType(ctx.p_2_2)
-      return .SomeTyping(type_)
+      return .someTyping(type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of OptionalTypingContext")
   }
@@ -314,10 +314,10 @@ func buildOptionalTyping(_ ctx: StellaParser.OptionalTypingContext) throws -> Op
 func buildPatternData(_ ctx: StellaParser.PatternDataContext) throws -> PatternData {
   switch ctx {
     case let ctx as StellaParser.NoPatternDataContext:
-      return .NoPatternData
+      return .noPatternData
     case let ctx as StellaParser.SomePatternDataContext:
       let pattern = try buildPattern(ctx.p_2_2)
-      return .SomePatternData(pattern)
+      return .somePatternData(pattern)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of PatternDataContext")
   }
@@ -326,10 +326,10 @@ func buildPatternData(_ ctx: StellaParser.PatternDataContext) throws -> PatternD
 func buildExprData(_ ctx: StellaParser.ExprDataContext) throws -> ExprData {
   switch ctx {
     case let ctx as StellaParser.NoExprDataContext:
-      return .NoExprData
+      return .noExprData
     case let ctx as StellaParser.SomeExprDataContext:
       let expr = try buildExpr(ctx.p_2_2)
-      return .SomeExprData(expr)
+      return .someExprData(expr)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of ExprDataContext")
   }
@@ -340,41 +340,41 @@ func buildPattern(_ ctx: StellaParser.PatternContext) throws -> Pattern {
     case let ctx as StellaParser.PatternVariantContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_2)
       let patterndata = try buildPatternData(ctx.p_1_3)
-      return .PatternVariant(stellaident, patterndata)
+      return .patternVariant(stellaident, patterndata)
     case let ctx as StellaParser.PatternInlContext:
       let pattern = try buildPattern(ctx.p_2_3)
-      return .PatternInl(pattern)
+      return .patternInl(pattern)
     case let ctx as StellaParser.PatternInrContext:
       let pattern = try buildPattern(ctx.p_3_3)
-      return .PatternInr(pattern)
+      return .patternInr(pattern)
     case let ctx as StellaParser.PatternTupleContext:
       let listpattern = try buildPatternList(ctx.p_4_2)
-      return .PatternTuple(listpattern)
+      return .patternTuple(listpattern)
     case let ctx as StellaParser.PatternRecordContext:
       let listlabelledpattern = try buildLabelledPatternList(ctx.p_5_2)
-      return .PatternRecord(listlabelledpattern)
+      return .patternRecord(listlabelledpattern)
     case let ctx as StellaParser.PatternListContext:
       let listpattern = try buildPatternList(ctx.p_6_2)
-      return .PatternList(listpattern)
+      return .patternList(listpattern)
     case let ctx as StellaParser.PatternConsContext:
       let pattern1 = try buildPattern(ctx.p_7_2)
       let pattern2 = try buildPattern(ctx.p_7_4)
-      return .PatternCons(pattern1, pattern2)
+      return .patternCons(pattern1, pattern2)
     case let ctx as StellaParser.PatternFalseContext:
-      return .PatternFalse
+      return .patternFalse
     case let ctx as StellaParser.PatternTrueContext:
-      return .PatternTrue
+      return .patternTrue
     case let ctx as StellaParser.PatternUnitContext:
-      return .PatternUnit
+      return .patternUnit
     case let ctx as StellaParser.PatternIntContext:
       let integer = try buildIntegerToken(ctx.p_11_1)
-      return .PatternInt(integer)
+      return .patternInt(integer)
     case let ctx as StellaParser.PatternSuccContext:
       let pattern = try buildPattern(ctx.p_12_3)
-      return .PatternSucc(pattern)
+      return .patternSucc(pattern)
     case let ctx as StellaParser.PatternVarContext:
       let stellaident = try buildStellaIdentToken(ctx.p_13_1)
-      return .PatternVar(stellaident)
+      return .patternVar(stellaident)
     case let ctx as StellaParser.Coercion_Pattern_14Context:
       return try buildPattern(ctx.p_14_2)
     default:
@@ -403,7 +403,7 @@ func buildLabelledPattern(_ ctx: StellaParser.LabelledPatternContext) throws -> 
     case let ctx as StellaParser.ALabelledPatternContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_1)
       let pattern = try buildPattern(ctx.p_1_3)
-      return .ALabelledPattern(stellaident, pattern)
+      return .aLabelledPattern(stellaident, pattern)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of LabelledPatternContext")
   }
@@ -428,7 +428,7 @@ func buildBinding(_ ctx: StellaParser.BindingContext) throws -> Binding {
     case let ctx as StellaParser.ABindingContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_1)
       let expr = try buildExpr(ctx.p_1_3)
-      return .ABinding(stellaident, expr)
+      return .aBinding(stellaident, expr)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of BindingContext")
   }
@@ -453,21 +453,21 @@ func buildExpr(_ ctx: StellaParser.ExprContext) throws -> Expr {
     case let ctx as StellaParser.SequenceContext:
       let expr1 = try buildExpr1(ctx.p_1_1)
       let expr2 = try buildExpr(ctx.p_1_3)
-      return .Sequence(expr1, expr2)
+      return .sequence(expr1, expr2)
     case let ctx as StellaParser.Coercion_Expr_2Context:
       return try buildExpr1(ctx.p_2_1)
     case let ctx as StellaParser.LetContext:
       let listpatternbinding = try buildPatternBindingList(ctx.p_3_2)
       let expr = try buildExpr(ctx.p_3_4)
-      return .Let(listpatternbinding, expr)
+      return .let(listpatternbinding, expr)
     case let ctx as StellaParser.LetRecContext:
       let listpatternbinding = try buildPatternBindingList(ctx.p_4_2)
       let expr = try buildExpr(ctx.p_4_4)
-      return .LetRec(listpatternbinding, expr)
+      return .letRec(listpatternbinding, expr)
     case let ctx as StellaParser.TypeAbstractionContext:
       let liststellaident = try buildStellaIdentTokenList(ctx.p_5_3)
       let expr = try buildExpr(ctx.p_5_5)
-      return .TypeAbstraction(liststellaident, expr)
+      return .typeAbstraction(liststellaident, expr)
     case let ctx as StellaParser.Coercion_Expr_6Context:
       return try buildExpr1(ctx.p_6_1)
     default:
@@ -496,12 +496,12 @@ func buildExpr1(_ ctx: StellaParser.Expr1Context) throws -> Expr {
     case let ctx as StellaParser.AssignContext:
       let expr1 = try buildExpr2(ctx.p_1_1)
       let expr2 = try buildExpr1(ctx.p_1_3)
-      return .Assign(expr1, expr2)
+      return .assign(expr1, expr2)
     case let ctx as StellaParser.IfContext:
       let expr1 = try buildExpr1(ctx.p_2_2)
       let expr2 = try buildExpr1(ctx.p_2_4)
       let expr3 = try buildExpr1(ctx.p_2_6)
-      return .If(expr1, expr2, expr3)
+      return .if(expr1, expr2, expr3)
     case let ctx as StellaParser.Coercion_Expr1_3Context:
       return try buildExpr2(ctx.p_3_1)
     default:
@@ -514,7 +514,7 @@ func buildPatternBinding(_ ctx: StellaParser.PatternBindingContext) throws -> Pa
     case let ctx as StellaParser.APatternBindingContext:
       let pattern = try buildPattern(ctx.p_1_1)
       let expr = try buildExpr(ctx.p_1_3)
-      return .APatternBinding(pattern, expr)
+      return .aPatternBinding(pattern, expr)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of PatternBindingContext")
   }
@@ -539,27 +539,27 @@ func buildExpr2(_ ctx: StellaParser.Expr2Context) throws -> Expr {
     case let ctx as StellaParser.LessThanContext:
       let expr1 = try buildExpr3(ctx.p_1_1)
       let expr2 = try buildExpr3(ctx.p_1_3)
-      return .LessThan(expr1, expr2)
+      return .lessThan(expr1, expr2)
     case let ctx as StellaParser.LessThanOrEqualContext:
       let expr1 = try buildExpr3(ctx.p_2_1)
       let expr2 = try buildExpr3(ctx.p_2_3)
-      return .LessThanOrEqual(expr1, expr2)
+      return .lessThanOrEqual(expr1, expr2)
     case let ctx as StellaParser.GreaterThanContext:
       let expr1 = try buildExpr3(ctx.p_3_1)
       let expr2 = try buildExpr3(ctx.p_3_3)
-      return .GreaterThan(expr1, expr2)
+      return .greaterThan(expr1, expr2)
     case let ctx as StellaParser.GreaterThanOrEqualContext:
       let expr1 = try buildExpr3(ctx.p_4_1)
       let expr2 = try buildExpr3(ctx.p_4_3)
-      return .GreaterThanOrEqual(expr1, expr2)
+      return .greaterThanOrEqual(expr1, expr2)
     case let ctx as StellaParser.EqualContext:
       let expr1 = try buildExpr3(ctx.p_5_1)
       let expr2 = try buildExpr3(ctx.p_5_3)
-      return .Equal(expr1, expr2)
+      return .equal(expr1, expr2)
     case let ctx as StellaParser.NotEqualContext:
       let expr1 = try buildExpr3(ctx.p_6_1)
       let expr2 = try buildExpr3(ctx.p_6_3)
-      return .NotEqual(expr1, expr2)
+      return .notEqual(expr1, expr2)
     case let ctx as StellaParser.Coercion_Expr2_7Context:
       return try buildExpr3(ctx.p_7_1)
     default:
@@ -586,38 +586,38 @@ func buildExpr3(_ ctx: StellaParser.Expr3Context) throws -> Expr {
     case let ctx as StellaParser.TypeAscContext:
       let expr = try buildExpr3(ctx.p_1_1)
       let type_ = try buildType2(ctx.p_1_3)
-      return .TypeAsc(expr, type_)
+      return .typeAsc(expr, type_)
     case let ctx as StellaParser.TypeCastContext:
       let expr = try buildExpr3(ctx.p_2_1)
       let type_ = try buildType2(ctx.p_2_4)
-      return .TypeCast(expr, type_)
+      return .typeCast(expr, type_)
     case let ctx as StellaParser.AbstractionContext:
       let listparamdecl = try buildParamDeclList(ctx.p_3_3)
       let expr = try buildExpr(ctx.p_3_7)
-      return .Abstraction(listparamdecl, expr)
+      return .abstraction(listparamdecl, expr)
     case let ctx as StellaParser.VariantContext:
       let stellaident = try buildStellaIdentToken(ctx.p_4_2)
       let exprdata = try buildExprData(ctx.p_4_3)
-      return .Variant(stellaident, exprdata)
+      return .variant(stellaident, exprdata)
     case let ctx as StellaParser.MatchContext:
       let expr = try buildExpr2(ctx.p_5_2)
       let listmatchcase = try buildMatchCaseList(ctx.p_5_4)
-      return .Match(expr, listmatchcase)
+      return .match(expr, listmatchcase)
     case let ctx as StellaParser.ListContext:
       let listexpr = try buildExprList(ctx.p_6_2)
-      return .List(listexpr)
+      return .list(listexpr)
     case let ctx as StellaParser.AddContext:
       let expr1 = try buildExpr3(ctx.p_7_1)
       let expr2 = try buildExpr4(ctx.p_7_3)
-      return .Add(expr1, expr2)
+      return .add(expr1, expr2)
     case let ctx as StellaParser.SubtractContext:
       let expr1 = try buildExpr3(ctx.p_8_1)
       let expr2 = try buildExpr4(ctx.p_8_3)
-      return .Subtract(expr1, expr2)
+      return .subtract(expr1, expr2)
     case let ctx as StellaParser.LogicOrContext:
       let expr1 = try buildExpr3(ctx.p_9_1)
       let expr2 = try buildExpr4(ctx.p_9_3)
-      return .LogicOr(expr1, expr2)
+      return .logicOr(expr1, expr2)
     case let ctx as StellaParser.Coercion_Expr3_10Context:
       return try buildExpr4(ctx.p_10_1)
     default:
@@ -630,15 +630,15 @@ func buildExpr4(_ ctx: StellaParser.Expr4Context) throws -> Expr {
     case let ctx as StellaParser.MultiplyContext:
       let expr1 = try buildExpr4(ctx.p_1_1)
       let expr2 = try buildExpr5(ctx.p_1_3)
-      return .Multiply(expr1, expr2)
+      return .multiply(expr1, expr2)
     case let ctx as StellaParser.DivideContext:
       let expr1 = try buildExpr4(ctx.p_2_1)
       let expr2 = try buildExpr5(ctx.p_2_3)
-      return .Divide(expr1, expr2)
+      return .divide(expr1, expr2)
     case let ctx as StellaParser.LogicAndContext:
       let expr1 = try buildExpr4(ctx.p_3_1)
       let expr2 = try buildExpr5(ctx.p_3_3)
-      return .LogicAnd(expr1, expr2)
+      return .logicAnd(expr1, expr2)
     case let ctx as StellaParser.Coercion_Expr4_4Context:
       return try buildExpr5(ctx.p_4_1)
     default:
@@ -650,10 +650,10 @@ func buildExpr5(_ ctx: StellaParser.Expr5Context) throws -> Expr {
   switch ctx {
     case let ctx as StellaParser.RefContext:
       let expr = try buildExpr5(ctx.p_1_3)
-      return .Ref(expr)
+      return .ref(expr)
     case let ctx as StellaParser.DerefContext:
       let expr = try buildExpr5(ctx.p_2_2)
-      return .Deref(expr)
+      return .deref(expr)
     case let ctx as StellaParser.Coercion_Expr5_3Context:
       return try buildExpr6(ctx.p_3_1)
     default:
@@ -666,86 +666,86 @@ func buildExpr6(_ ctx: StellaParser.Expr6Context) throws -> Expr {
     case let ctx as StellaParser.ApplicationContext:
       let expr = try buildExpr6(ctx.p_1_1)
       let listexpr = try buildExprList(ctx.p_1_3)
-      return .Application(expr, listexpr)
+      return .application(expr, listexpr)
     case let ctx as StellaParser.TypeApplicationContext:
       let expr = try buildExpr6(ctx.p_2_1)
       let listtype = try buildTypeList(ctx.p_2_3)
-      return .TypeApplication(expr, listtype)
+      return .typeApplication(expr, listtype)
     case let ctx as StellaParser.DotRecordContext:
       let expr = try buildExpr6(ctx.p_3_1)
       let stellaident = try buildStellaIdentToken(ctx.p_3_3)
-      return .DotRecord(expr, stellaident)
+      return .dotRecord(expr, stellaident)
     case let ctx as StellaParser.DotTupleContext:
       let expr = try buildExpr6(ctx.p_4_1)
       let integer = try buildIntegerToken(ctx.p_4_3)
-      return .DotTuple(expr, integer)
+      return .dotTuple(expr, integer)
     case let ctx as StellaParser.TupleContext:
       let listexpr = try buildExprList(ctx.p_5_2)
-      return .Tuple(listexpr)
+      return .tuple(listexpr)
     case let ctx as StellaParser.RecordContext:
       let listbinding = try buildBindingList(ctx.p_6_2)
-      return .Record(listbinding)
+      return .record(listbinding)
     case let ctx as StellaParser.ConsListContext:
       let expr1 = try buildExpr(ctx.p_7_3)
       let expr2 = try buildExpr(ctx.p_7_5)
-      return .ConsList(expr1, expr2)
+      return .consList(expr1, expr2)
     case let ctx as StellaParser.HeadContext:
       let expr = try buildExpr(ctx.p_8_3)
-      return .Head(expr)
+      return .head(expr)
     case let ctx as StellaParser.IsEmptyContext:
       let expr = try buildExpr(ctx.p_9_3)
-      return .IsEmpty(expr)
+      return .isEmpty(expr)
     case let ctx as StellaParser.TailContext:
       let expr = try buildExpr(ctx.p_10_3)
-      return .Tail(expr)
+      return .tail(expr)
     case let ctx as StellaParser.PanicContext:
-      return .Panic
+      return .panic
     case let ctx as StellaParser.ThrowContext:
       let expr = try buildExpr(ctx.p_12_3)
-      return .Throw(expr)
+      return .throw(expr)
     case let ctx as StellaParser.TryCatchContext:
       let expr1 = try buildExpr(ctx.p_13_3)
       let pattern = try buildPattern(ctx.p_13_7)
       let expr2 = try buildExpr(ctx.p_13_9)
-      return .TryCatch(expr1, pattern, expr2)
+      return .tryCatch(expr1, pattern, expr2)
     case let ctx as StellaParser.TryWithContext:
       let expr1 = try buildExpr(ctx.p_14_3)
       let expr2 = try buildExpr(ctx.p_14_7)
-      return .TryWith(expr1, expr2)
+      return .tryWith(expr1, expr2)
     case let ctx as StellaParser.InlContext:
       let expr = try buildExpr(ctx.p_15_3)
-      return .Inl(expr)
+      return .inl(expr)
     case let ctx as StellaParser.InrContext:
       let expr = try buildExpr(ctx.p_16_3)
-      return .Inr(expr)
+      return .inr(expr)
     case let ctx as StellaParser.SuccContext:
       let expr = try buildExpr(ctx.p_17_3)
-      return .Succ(expr)
+      return .succ(expr)
     case let ctx as StellaParser.LogicNotContext:
       let expr = try buildExpr(ctx.p_18_3)
-      return .LogicNot(expr)
+      return .logicNot(expr)
     case let ctx as StellaParser.PredContext:
       let expr = try buildExpr(ctx.p_19_3)
-      return .Pred(expr)
+      return .pred(expr)
     case let ctx as StellaParser.IsZeroContext:
       let expr = try buildExpr(ctx.p_20_3)
-      return .IsZero(expr)
+      return .isZero(expr)
     case let ctx as StellaParser.FixContext:
       let expr = try buildExpr(ctx.p_21_3)
-      return .Fix(expr)
+      return .fix(expr)
     case let ctx as StellaParser.NatRecContext:
       let expr1 = try buildExpr(ctx.p_22_3)
       let expr2 = try buildExpr(ctx.p_22_5)
       let expr3 = try buildExpr(ctx.p_22_7)
-      return .NatRec(expr1, expr2, expr3)
+      return .natRec(expr1, expr2, expr3)
     case let ctx as StellaParser.FoldContext:
       let type_ = try buildType(ctx.p_23_3)
       let expr = try buildExpr7(ctx.p_23_5)
-      return .Fold(type_, expr)
+      return .fold(type_, expr)
     case let ctx as StellaParser.UnfoldContext:
       let type_ = try buildType(ctx.p_24_3)
       let expr = try buildExpr7(ctx.p_24_5)
-      return .Unfold(type_, expr)
+      return .unfold(type_, expr)
     case let ctx as StellaParser.Coercion_Expr6_25Context:
       return try buildExpr7(ctx.p_25_1)
     default:
@@ -756,23 +756,23 @@ func buildExpr6(_ ctx: StellaParser.Expr6Context) throws -> Expr {
 func buildExpr7(_ ctx: StellaParser.Expr7Context) throws -> Expr {
   switch ctx {
     case let ctx as StellaParser.ConstTrueContext:
-      return .ConstTrue
+      return .constTrue
     case let ctx as StellaParser.ConstFalseContext:
-      return .ConstFalse
+      return .constFalse
     case let ctx as StellaParser.ConstUnitContext:
-      return .ConstUnit
+      return .constUnit
     case let ctx as StellaParser.ConstIntContext:
       let integer = try buildIntegerToken(ctx.p_4_1)
-      return .ConstInt(integer)
+      return .constInt(integer)
     case let ctx as StellaParser.ConstDoubleContext:
       let double = try buildDoubleToken(ctx.p_5_1)
-      return .ConstDouble(double)
+      return .constDouble(double)
     case let ctx as StellaParser.ConstMemoryContext:
       let memoryaddress = try buildMemoryAddressToken(ctx.p_6_1)
-      return .ConstMemory(memoryaddress)
+      return .constMemory(memoryaddress)
     case let ctx as StellaParser.VarContext:
       let stellaident = try buildStellaIdentToken(ctx.p_7_1)
-      return .Var(stellaident)
+      return .var(stellaident)
     case let ctx as StellaParser.Coercion_Expr7_8Context:
       return try buildExpr(ctx.p_8_2)
     default:
@@ -785,15 +785,15 @@ func buildType(_ ctx: StellaParser.TypeContext) throws -> Type_ {
     case let ctx as StellaParser.TypeFunContext:
       let listtype = try buildTypeList(ctx.p_1_3)
       let type_ = try buildType(ctx.p_1_6)
-      return .TypeFun(listtype, type_)
+      return .typeFun(listtype, type_)
     case let ctx as StellaParser.TypeForAllContext:
       let liststellaident = try buildStellaIdentTokenList(ctx.p_2_2)
       let type_ = try buildType(ctx.p_2_4)
-      return .TypeForAll(liststellaident, type_)
+      return .typeForAll(liststellaident, type_)
     case let ctx as StellaParser.TypeRecContext:
       let stellaident = try buildStellaIdentToken(ctx.p_3_2)
       let type_ = try buildType(ctx.p_3_4)
-      return .TypeRec(stellaident, type_)
+      return .typeRec(stellaident, type_)
     case let ctx as StellaParser.Coercion_Type_4Context:
       return try buildType1(ctx.p_4_1)
     default:
@@ -806,7 +806,7 @@ func buildType1(_ ctx: StellaParser.Type1Context) throws -> Type_ {
     case let ctx as StellaParser.TypeSumContext:
       let type1 = try buildType2(ctx.p_1_1)
       let type2 = try buildType2(ctx.p_1_3)
-      return .TypeSum(type1, type2)
+      return .typeSum(type1, type2)
     case let ctx as StellaParser.Coercion_Type1_2Context:
       return try buildType2(ctx.p_2_1)
     default:
@@ -818,16 +818,16 @@ func buildType2(_ ctx: StellaParser.Type2Context) throws -> Type_ {
   switch ctx {
     case let ctx as StellaParser.TypeTupleContext:
       let listtype = try buildTypeList(ctx.p_1_2)
-      return .TypeTuple(listtype)
+      return .typeTuple(listtype)
     case let ctx as StellaParser.TypeRecordContext:
       let listrecordfieldtype = try buildRecordFieldTypeList(ctx.p_2_2)
-      return .TypeRecord(listrecordfieldtype)
+      return .typeRecord(listrecordfieldtype)
     case let ctx as StellaParser.TypeVariantContext:
       let listvariantfieldtype = try buildVariantFieldTypeList(ctx.p_3_2)
-      return .TypeVariant(listvariantfieldtype)
+      return .typeVariant(listvariantfieldtype)
     case let ctx as StellaParser.TypeListContext:
       let type_ = try buildType(ctx.p_4_2)
-      return .TypeList(type_)
+      return .typeList(type_)
     case let ctx as StellaParser.Coercion_Type2_5Context:
       return try buildType3(ctx.p_5_1)
     default:
@@ -838,21 +838,21 @@ func buildType2(_ ctx: StellaParser.Type2Context) throws -> Type_ {
 func buildType3(_ ctx: StellaParser.Type3Context) throws -> Type_ {
   switch ctx {
     case let ctx as StellaParser.TypeBoolContext:
-      return .TypeBool
+      return .typeBool
     case let ctx as StellaParser.TypeNatContext:
-      return .TypeNat
+      return .typeNat
     case let ctx as StellaParser.TypeUnitContext:
-      return .TypeUnit
+      return .typeUnit
     case let ctx as StellaParser.TypeTopContext:
-      return .TypeTop
+      return .typeTop
     case let ctx as StellaParser.TypeBottomContext:
-      return .TypeBottom
+      return .typeBottom
     case let ctx as StellaParser.TypeRefContext:
       let type_ = try buildType2(ctx.p_6_2)
-      return .TypeRef(type_)
+      return .typeRef(type_)
     case let ctx as StellaParser.TypeVarContext:
       let stellaident = try buildStellaIdentToken(ctx.p_7_1)
-      return .TypeVar(stellaident)
+      return .typeVar(stellaident)
     case let ctx as StellaParser.Coercion_Type3_8Context:
       return try buildType(ctx.p_8_2)
     default:
@@ -881,7 +881,7 @@ func buildVariantFieldType(_ ctx: StellaParser.VariantFieldTypeContext) throws -
     case let ctx as StellaParser.AVariantFieldTypeContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_1)
       let optionaltyping = try buildOptionalTyping(ctx.p_1_2)
-      return .AVariantFieldType(stellaident, optionaltyping)
+      return .aVariantFieldType(stellaident, optionaltyping)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of VariantFieldTypeContext")
   }
@@ -908,7 +908,7 @@ func buildRecordFieldType(_ ctx: StellaParser.RecordFieldTypeContext) throws -> 
     case let ctx as StellaParser.ARecordFieldTypeContext:
       let stellaident = try buildStellaIdentToken(ctx.p_1_1)
       let type_ = try buildType(ctx.p_1_3)
-      return .ARecordFieldType(stellaident, type_)
+      return .aRecordFieldType(stellaident, type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of RecordFieldTypeContext")
   }
@@ -933,7 +933,7 @@ func buildTyping(_ ctx: StellaParser.TypingContext) throws -> Typing {
     case let ctx as StellaParser.ATypingContext:
       let expr = try buildExpr(ctx.p_1_1)
       let type_ = try buildType(ctx.p_1_3)
-      return .ATyping(expr, type_)
+      return .aTyping(expr, type_)
     default:
       throw BuildError.UnexpectedParseContext("Error: ctx should be an instance of TypingContext")
   }

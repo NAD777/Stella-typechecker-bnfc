@@ -38,180 +38,180 @@ public struct MemoryAddressToken: Hashable {
 }
 
 public indirect enum Program: Hashable {
-  case AProgram(LanguageDecl, [Extension_], [Decl])
+  case aProgram(LanguageDecl, [Extension_], [Decl])
 }
 
 public indirect enum LanguageDecl: Hashable {
-  case LanguageCore
+  case languageCore
 }
 
 public indirect enum Extension_: Hashable {
-  case AnExtension([ExtensionNameToken])
+  case anExtension([ExtensionNameToken])
 }
 
 public indirect enum Decl: Hashable {
-  case DeclFun([Annotation], StellaIdentToken, [ParamDecl], ReturnType, ThrowType, [Decl], Expr)
-  case DeclFunGeneric([Annotation], StellaIdentToken, [StellaIdentToken], [ParamDecl], ReturnType, ThrowType, [Decl], Expr)
-  case DeclTypeAlias(StellaIdentToken, Type_)
-  case DeclExceptionType(Type_)
-  case DeclExceptionVariant(StellaIdentToken, Type_)
+  case declFun([Annotation], StellaIdentToken, [ParamDecl], ReturnType, ThrowType, [Decl], Expr)
+  case declFunGeneric([Annotation], StellaIdentToken, [StellaIdentToken], [ParamDecl], ReturnType, ThrowType, [Decl], Expr)
+  case declTypeAlias(StellaIdentToken, Type_)
+  case declExceptionType(Type_)
+  case declExceptionVariant(StellaIdentToken, Type_)
 }
 
 public indirect enum LocalDecl: Hashable {
-  case ALocalDecl(Decl)
+  case aLocalDecl(Decl)
 }
 
 public indirect enum Annotation: Hashable {
-  case InlineAnnotation
+  case inlineAnnotation
 }
 
 public indirect enum ParamDecl: Hashable {
-  case AParamDecl(StellaIdentToken, Type_)
+  case aParamDecl(StellaIdentToken, Type_)
 }
 
 public indirect enum ReturnType: Hashable {
-  case NoReturnType
-  case SomeReturnType(Type_)
+  case noReturnType
+  case someReturnType(Type_)
 }
 
 public indirect enum ThrowType: Hashable {
-  case NoThrowType
-  case SomeThrowType([Type_])
+  case noThrowType
+  case someThrowType([Type_])
 }
 
 public indirect enum Type_: Hashable {
-  case TypeFun([Type_], Type_)
-  case TypeForAll([StellaIdentToken], Type_)
-  case TypeRec(StellaIdentToken, Type_)
-  case TypeSum(Type_, Type_)
-  case TypeTuple([Type_])
-  case TypeRecord([RecordFieldType])
-  case TypeVariant([VariantFieldType])
-  case TypeList(Type_)
-  case TypeBool
-  case TypeNat
-  case TypeUnit
-  case TypeTop
-  case TypeBottom
-  case TypeRef(Type_)
-  case TypeVar(StellaIdentToken)
+  case typeFun([Type_], Type_)
+  case typeForAll([StellaIdentToken], Type_)
+  case typeRec(StellaIdentToken, Type_)
+  case typeSum(Type_, Type_)
+  case typeTuple([Type_])
+  case typeRecord([RecordFieldType])
+  case typeVariant([VariantFieldType])
+  case typeList(Type_)
+  case typeBool
+  case typeNat
+  case typeUnit
+  case typeTop
+  case typeBottom
+  case typeRef(Type_)
+  case typeVar(StellaIdentToken)
 }
 
 public indirect enum MatchCase: Hashable {
-  case AMatchCase(Pattern, Expr)
+  case aMatchCase(Pattern, Expr)
 }
 
 public indirect enum OptionalTyping: Hashable {
-  case NoTyping
-  case SomeTyping(Type_)
+  case noTyping
+  case someTyping(Type_)
 }
 
 public indirect enum PatternData: Hashable {
-  case NoPatternData
-  case SomePatternData(Pattern)
+  case noPatternData
+  case somePatternData(Pattern)
 }
 
 public indirect enum ExprData: Hashable {
-  case NoExprData
-  case SomeExprData(Expr)
+  case noExprData
+  case someExprData(Expr)
 }
 
 public indirect enum Pattern: Hashable {
-  case PatternVariant(StellaIdentToken, PatternData)
-  case PatternInl(Pattern)
-  case PatternInr(Pattern)
-  case PatternTuple([Pattern])
-  case PatternRecord([LabelledPattern])
-  case PatternList([Pattern])
-  case PatternCons(Pattern, Pattern)
-  case PatternFalse
-  case PatternTrue
-  case PatternUnit
-  case PatternInt(IntegerToken)
-  case PatternSucc(Pattern)
-  case PatternVar(StellaIdentToken)
+  case patternVariant(StellaIdentToken, PatternData)
+  case patternInl(Pattern)
+  case patternInr(Pattern)
+  case patternTuple([Pattern])
+  case patternRecord([LabelledPattern])
+  case patternList([Pattern])
+  case patternCons(Pattern, Pattern)
+  case patternFalse
+  case patternTrue
+  case patternUnit
+  case patternInt(IntegerToken)
+  case patternSucc(Pattern)
+  case patternVar(StellaIdentToken)
 }
 
 public indirect enum LabelledPattern: Hashable {
-  case ALabelledPattern(StellaIdentToken, Pattern)
+  case aLabelledPattern(StellaIdentToken, Pattern)
 }
 
 public indirect enum Binding: Hashable {
-  case ABinding(StellaIdentToken, Expr)
+  case aBinding(StellaIdentToken, Expr)
 }
 
 public indirect enum Expr: Hashable {
-  case `Sequence`(Expr, Expr?)
-  case Assign(Expr, Expr)
-  case If(Expr, Expr, Expr)
-  case Let([PatternBinding], Expr)
-  case LetRec([PatternBinding], Expr)
-  case TypeAbstraction([StellaIdentToken], Expr)
-  case LessThan(Expr, Expr)
-  case LessThanOrEqual(Expr, Expr)
-  case GreaterThan(Expr, Expr)
-  case GreaterThanOrEqual(Expr, Expr)
-  case Equal(Expr, Expr)
-  case NotEqual(Expr, Expr)
-  case TypeAsc(Expr, Type_)
-  case TypeCast(Expr, Type_)
-  case Abstraction([ParamDecl], Expr)
-  case Variant(StellaIdentToken, ExprData)
-  case Match(Expr, [MatchCase])
-  case List([Expr])
-  case Add(Expr, Expr)
-  case Subtract(Expr, Expr)
-  case LogicOr(Expr, Expr)
-  case Multiply(Expr, Expr)
-  case Divide(Expr, Expr)
-  case LogicAnd(Expr, Expr)
-  case Ref(Expr)
-  case Deref(Expr)
-  case Application(Expr, [Expr])
-  case TypeApplication(Expr, [Type_])
-  case DotRecord(Expr, StellaIdentToken)
-  case DotTuple(Expr, IntegerToken)
-  case Tuple([Expr])
-  case Record([Binding])
-  case ConsList(Expr, Expr)
-  case Head(Expr)
-  case IsEmpty(Expr)
-  case Tail(Expr)
-  case Panic
-  case Throw(Expr)
-  case TryCatch(Expr, Pattern, Expr)
-  case TryWith(Expr, Expr)
-  case Inl(Expr)
-  case Inr(Expr)
-  case Succ(Expr)
-  case LogicNot(Expr)
-  case Pred(Expr)
-  case IsZero(Expr)
-  case Fix(Expr)
-  case NatRec(Expr, Expr, Expr)
-  case Fold(Type_, Expr)
-  case Unfold(Type_, Expr)
-  case ConstTrue
-  case ConstFalse
-  case ConstUnit
-  case ConstInt(IntegerToken)
-  case ConstDouble(DoubleToken)
-  case ConstMemory(MemoryAddressToken)
-  case Var(StellaIdentToken)
+  case sequence(Expr, Expr?)
+  case assign(Expr, Expr)
+  case `if`(Expr, Expr, Expr)
+  case `let`([PatternBinding], Expr)
+  case letRec([PatternBinding], Expr)
+  case typeAbstraction([StellaIdentToken], Expr)
+  case lessThan(Expr, Expr)
+  case lessThanOrEqual(Expr, Expr)
+  case greaterThan(Expr, Expr)
+  case greaterThanOrEqual(Expr, Expr)
+  case equal(Expr, Expr)
+  case notEqual(Expr, Expr)
+  case typeAsc(Expr, Type_)
+  case typeCast(Expr, Type_)
+  case abstraction([ParamDecl], Expr)
+  case variant(StellaIdentToken, ExprData)
+  case match(Expr, [MatchCase])
+  case list([Expr])
+  case add(Expr, Expr)
+  case subtract(Expr, Expr)
+  case logicOr(Expr, Expr)
+  case multiply(Expr, Expr)
+  case divide(Expr, Expr)
+  case logicAnd(Expr, Expr)
+  case ref(Expr)
+  case deref(Expr)
+  case application(Expr, [Expr])
+  case typeApplication(Expr, [Type_])
+  case dotRecord(Expr, StellaIdentToken)
+  case dotTuple(Expr, IntegerToken)
+  case tuple([Expr])
+  case record([Binding])
+  case consList(Expr, Expr)
+  case head(Expr)
+  case isEmpty(Expr)
+  case tail(Expr)
+  case panic
+  case `throw`(Expr)
+  case tryCatch(Expr, Pattern, Expr)
+  case tryWith(Expr, Expr)
+  case inl(Expr)
+  case inr(Expr)
+  case succ(Expr)
+  case logicNot(Expr)
+  case pred(Expr)
+  case isZero(Expr)
+  case fix(Expr)
+  case natRec(Expr, Expr, Expr)
+  case fold(Type_, Expr)
+  case unfold(Type_, Expr)
+  case constTrue
+  case constFalse
+  case constUnit
+  case constInt(IntegerToken)
+  case constDouble(DoubleToken)
+  case constMemory(MemoryAddressToken)
+  case `var`(StellaIdentToken)
 }
 
 public indirect enum PatternBinding: Hashable {
-  case APatternBinding(Pattern, Expr)
+  case aPatternBinding(Pattern, Expr)
 }
 
 public indirect enum VariantFieldType: Hashable {
-  case AVariantFieldType(StellaIdentToken, OptionalTyping)
+  case aVariantFieldType(StellaIdentToken, OptionalTyping)
 }
 
 public indirect enum RecordFieldType: Hashable {
-  case ARecordFieldType(StellaIdentToken, Type_)
+  case aRecordFieldType(StellaIdentToken, Type_)
 }
 
 public indirect enum Typing: Hashable {
-  case ATyping(Expr, Type_)
+  case aTyping(Expr, Type_)
 }

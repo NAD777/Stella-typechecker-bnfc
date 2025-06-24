@@ -66,19 +66,19 @@ extension Context {
   func add(decls: [Decl]) throws -> Self {
     try decls.forEach { decl in
       switch decl {
-        case .DeclFun(let annotations, let name, let paramDecls, let returnType, let throwTypes, let localDecls, let returnExpr):
+        case .declFun(let annotations, let name, let paramDecls, let returnType, let throwTypes, let localDecls, let returnExpr):
           try self.assertNotPresent(for: name.value)
           let functionType = try typeForFunction(paramDecls: paramDecls, returnType: returnType.type)
 
           _ = self.add(name: name.value, type: functionType)
 
-        case .DeclFunGeneric(let annotations, let name, let generics, let paramDecls, let returnType, let throwTypes, let localDecls, let returnExpr):
+        case .declFunGeneric(let annotations, let name, let generics, let paramDecls, let returnType, let throwTypes, let localDecls, let returnExpr):
           assertionFailure("Not implemented")
-        case .DeclTypeAlias(let name, let type):
+        case .declTypeAlias(let name, let type):
           assertionFailure("Not implemented")
-        case .DeclExceptionType(let exceptionType):
+        case .declExceptionType(let exceptionType):
           self.exceptionType = exceptionType
-        case .DeclExceptionVariant(let name, let variantType):
+        case .declExceptionVariant(let name, let variantType):
           assertionFailure("Not implemented")
       }
     }

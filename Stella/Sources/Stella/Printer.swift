@@ -396,7 +396,7 @@ extension Typing {
 
 func prettifyProgram(_ node: Program) -> [String] {
   switch node {
-    case let .AProgram(languagedecl, listextension, listdecl):
+    case let .aProgram(languagedecl, listextension, listdecl):
       var result = [String]()
       result += prettifyLanguageDecl(languagedecl)
       result += prettifyListOfExtension(listextension)
@@ -411,7 +411,7 @@ func prettifyListOfStellaIdent(_ list: [StellaIdentToken]) -> [String] {
 
 func prettifyLanguageDecl(_ node: LanguageDecl) -> [String] {
   switch node {
-    case .LanguageCore:
+    case .languageCore:
       var result = [String]()
       result += ["language"]
       result += ["core"]
@@ -422,7 +422,7 @@ func prettifyLanguageDecl(_ node: LanguageDecl) -> [String] {
 
 func prettifyExtension(_ node: Extension_) -> [String] {
   switch node {
-    case let .AnExtension(listextensionname):
+    case let .anExtension(listextensionname):
       var result = [String]()
       result += ["extend"]
       result += ["with"]
@@ -441,7 +441,7 @@ func prettifyListOfExtension(_ list: [Extension_]) -> [String] {
 
 func prettifyDecl(_ node: Decl) -> [String] {
   switch node {
-    case let .DeclFun(listannotation, stellaident, listparamdecl, returntype, throwtype, listdecl, expr):
+    case let .declFun(listannotation, stellaident, listparamdecl, returntype, throwtype, listdecl, expr):
       var result = [String]()
       result += prettifyListOfAnnotation(listannotation)
       result += ["fn"]
@@ -457,7 +457,7 @@ func prettifyDecl(_ node: Decl) -> [String] {
       result += prettifyExpr(expr)
       result += ["}"]
       return result
-    case let .DeclFunGeneric(listannotation, stellaident, liststellaident, listparamdecl, returntype, throwtype, listdecl, expr):
+    case let .declFunGeneric(listannotation, stellaident, liststellaident, listparamdecl, returntype, throwtype, listdecl, expr):
       var result = [String]()
       result += prettifyListOfAnnotation(listannotation)
       result += ["generic"]
@@ -477,21 +477,21 @@ func prettifyDecl(_ node: Decl) -> [String] {
       result += prettifyExpr(expr)
       result += ["}"]
       return result
-    case let .DeclTypeAlias(stellaident, type_):
+    case let .declTypeAlias(stellaident, type_):
       var result = [String]()
       result += ["type"]
       result += [stellaident.printed]
       result += ["="]
       result += prettifyType(type_)
       return result
-    case let .DeclExceptionType(type_):
+    case let .declExceptionType(type_):
       var result = [String]()
       result += ["exception"]
       result += ["type"]
       result += ["="]
       result += prettifyType(type_)
       return result
-    case let .DeclExceptionVariant(stellaident, type_):
+    case let .declExceptionVariant(stellaident, type_):
       var result = [String]()
       result += ["exception"]
       result += ["variant"]
@@ -508,7 +508,7 @@ func prettifyListOfDecl(_ list: [Decl]) -> [String] {
 
 func prettifyLocalDecl(_ node: LocalDecl) -> [String] {
   switch node {
-    case let .ALocalDecl(decl):
+    case let .aLocalDecl(decl):
       var result = [String]()
       result += prettifyDecl(decl)
       return result
@@ -521,7 +521,7 @@ func prettifyListOfLocalDecl(_ list: [LocalDecl]) -> [String] {
 
 func prettifyAnnotation(_ node: Annotation) -> [String] {
   switch node {
-    case .InlineAnnotation:
+    case .inlineAnnotation:
       var result = [String]()
       result += ["inline"]
       return result
@@ -534,7 +534,7 @@ func prettifyListOfAnnotation(_ list: [Annotation]) -> [String] {
 
 func prettifyParamDecl(_ node: ParamDecl) -> [String] {
   switch node {
-    case let .AParamDecl(stellaident, type_):
+    case let .aParamDecl(stellaident, type_):
       var result = [String]()
       result += [stellaident.printed]
       result += [":"]
@@ -549,11 +549,11 @@ func prettifyListOfParamDecl(_ list: [ParamDecl]) -> [String] {
 
 func prettifyReturnType(_ node: ReturnType) -> [String] {
   switch node {
-    case .NoReturnType:
+    case .noReturnType:
       var result = [String]()
 
       return result
-    case let .SomeReturnType(type_):
+    case let .someReturnType(type_):
       var result = [String]()
       result += ["->"]
       result += prettifyType(type_)
@@ -563,11 +563,11 @@ func prettifyReturnType(_ node: ReturnType) -> [String] {
 
 func prettifyThrowType(_ node: ThrowType) -> [String] {
   switch node {
-    case .NoThrowType:
+    case .noThrowType:
       var result = [String]()
 
       return result
-    case let .SomeThrowType(listtype):
+    case let .someThrowType(listtype):
       var result = [String]()
       result += ["throws"]
       result += prettifyListOfType9(listtype)
@@ -581,7 +581,7 @@ func prettifyListOfType9(_ list: [Type_]) -> [String] {
 
 func prettifyMatchCase(_ node: MatchCase) -> [String] {
   switch node {
-    case let .AMatchCase(pattern, expr):
+    case let .aMatchCase(pattern, expr):
       var result = [String]()
       result += prettifyPattern(pattern)
       result += ["=>"]
@@ -596,11 +596,11 @@ func prettifyListOfMatchCase(_ list: [MatchCase]) -> [String] {
 
 func prettifyOptionalTyping(_ node: OptionalTyping) -> [String] {
   switch node {
-    case .NoTyping:
+    case .noTyping:
       var result = [String]()
 
       return result
-    case let .SomeTyping(type_):
+    case let .someTyping(type_):
       var result = [String]()
       result += [":"]
       result += prettifyType(type_)
@@ -610,11 +610,11 @@ func prettifyOptionalTyping(_ node: OptionalTyping) -> [String] {
 
 func prettifyPatternData(_ node: PatternData) -> [String] {
   switch node {
-    case .NoPatternData:
+    case .noPatternData:
       var result = [String]()
 
       return result
-    case let .SomePatternData(pattern):
+    case let .somePatternData(pattern):
       var result = [String]()
       result += ["="]
       result += prettifyPattern(pattern)
@@ -624,11 +624,11 @@ func prettifyPatternData(_ node: PatternData) -> [String] {
 
 func prettifyExprData(_ node: ExprData) -> [String] {
   switch node {
-    case .NoExprData:
+    case .noExprData:
       var result = [String]()
 
       return result
-    case let .SomeExprData(expr):
+    case let .someExprData(expr):
       var result = [String]()
       result += ["="]
       result += prettifyExpr(expr)
@@ -638,46 +638,46 @@ func prettifyExprData(_ node: ExprData) -> [String] {
 
 func prettifyPattern(_ node: Pattern) -> [String] {
   switch node {
-    case let .PatternVariant(stellaident, patterndata):
+    case let .patternVariant(stellaident, patterndata):
       var result = [String]()
       result += ["<|"]
       result += [stellaident.printed]
       result += prettifyPatternData(patterndata)
       result += ["|>"]
       return result
-    case let .PatternInl(pattern):
+    case let .patternInl(pattern):
       var result = [String]()
       result += ["inl"]
       result += ["("]
       result += prettifyPattern(pattern)
       result += [")"]
       return result
-    case let .PatternInr(pattern):
+    case let .patternInr(pattern):
       var result = [String]()
       result += ["inr"]
       result += ["("]
       result += prettifyPattern(pattern)
       result += [")"]
       return result
-    case let .PatternTuple(listpattern):
+    case let .patternTuple(listpattern):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfPattern(listpattern)
       result += ["}"]
       return result
-    case let .PatternRecord(listlabelledpattern):
+    case let .patternRecord(listlabelledpattern):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfLabelledPattern(listlabelledpattern)
       result += ["}"]
       return result
-    case let .PatternList(listpattern):
+    case let .patternList(listpattern):
       var result = [String]()
       result += ["["]
       result += prettifyListOfPattern(listpattern)
       result += ["]"]
       return result
-    case let .PatternCons(pattern1, pattern2):
+    case let .patternCons(pattern1, pattern2):
       var result = [String]()
       result += ["("]
       result += prettifyPattern(pattern1)
@@ -685,30 +685,30 @@ func prettifyPattern(_ node: Pattern) -> [String] {
       result += prettifyPattern(pattern2)
       result += [")"]
       return result
-    case .PatternFalse:
+    case .patternFalse:
       var result = [String]()
       result += ["false"]
       return result
-    case .PatternTrue:
+    case .patternTrue:
       var result = [String]()
       result += ["true"]
       return result
-    case .PatternUnit:
+    case .patternUnit:
       var result = [String]()
       result += ["unit"]
       return result
-    case let .PatternInt(integer):
+    case let .patternInt(integer):
       var result = [String]()
       result += [integer.printed]
       return result
-    case let .PatternSucc(pattern):
+    case let .patternSucc(pattern):
       var result = [String]()
       result += ["succ"]
       result += ["("]
       result += prettifyPattern(pattern)
       result += [")"]
       return result
-    case let .PatternVar(stellaident):
+    case let .patternVar(stellaident):
       var result = [String]()
       result += [stellaident.printed]
       return result
@@ -721,7 +721,7 @@ func prettifyListOfPattern(_ list: [Pattern]) -> [String] {
 
 func prettifyLabelledPattern(_ node: LabelledPattern) -> [String] {
   switch node {
-    case let .ALabelledPattern(stellaident, pattern):
+    case let .aLabelledPattern(stellaident, pattern):
       var result = [String]()
       result += [stellaident.printed]
       result += ["="]
@@ -736,7 +736,7 @@ func prettifyListOfLabelledPattern(_ list: [LabelledPattern]) -> [String] {
 
 func prettifyBinding(_ node: Binding) -> [String] {
   switch node {
-    case let .ABinding(stellaident, expr):
+    case let .aBinding(stellaident, expr):
       var result = [String]()
       result += [stellaident.printed]
       result += ["="]
@@ -751,19 +751,19 @@ func prettifyListOfBinding(_ list: [Binding]) -> [String] {
 
 func prettifyExpr(_ node: Expr) -> [String] {
   switch node {
-    case let .Sequence(expr1, expr2):
+    case let .sequence(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += [";"]
       result += (expr2.map { prettifyExpr($0) }) ?? []
       return result
-    case let .Assign(expr1, expr2):
+    case let .assign(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += [":="]
       result += prettifyExpr(expr2)
       return result
-    case let .If(expr1, expr2, expr3):
+    case let .if(expr1, expr2, expr3):
       var result = [String]()
       result += ["if"]
       result += prettifyExpr(expr1)
@@ -772,21 +772,21 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += ["else"]
       result += prettifyExpr(expr3)
       return result
-    case let .Let(listpatternbinding, expr):
+    case let .let(listpatternbinding, expr):
       var result = [String]()
       result += ["let"]
       result += prettifyListOfPatternBinding(listpatternbinding)
       result += ["in"]
       result += prettifyExpr(expr)
       return result
-    case let .LetRec(listpatternbinding, expr):
+    case let .letRec(listpatternbinding, expr):
       var result = [String]()
       result += ["letrec"]
       result += prettifyListOfPatternBinding(listpatternbinding)
       result += ["in"]
       result += prettifyExpr(expr)
       return result
-    case let .TypeAbstraction(liststellaident, expr):
+    case let .typeAbstraction(liststellaident, expr):
       var result = [String]()
       result += ["generic"]
       result += ["["]
@@ -794,56 +794,56 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += ["]"]
       result += prettifyExpr(expr)
       return result
-    case let .LessThan(expr1, expr2):
+    case let .lessThan(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["<"]
       result += prettifyExpr(expr2)
       return result
-    case let .LessThanOrEqual(expr1, expr2):
+    case let .lessThanOrEqual(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["<="]
       result += prettifyExpr(expr2)
       return result
-    case let .GreaterThan(expr1, expr2):
+    case let .greaterThan(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += [">"]
       result += prettifyExpr(expr2)
       return result
-    case let .GreaterThanOrEqual(expr1, expr2):
+    case let .greaterThanOrEqual(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += [">="]
       result += prettifyExpr(expr2)
       return result
-    case let .Equal(expr1, expr2):
+    case let .equal(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["=="]
       result += prettifyExpr(expr2)
       return result
-    case let .NotEqual(expr1, expr2):
+    case let .notEqual(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["!="]
       result += prettifyExpr(expr2)
       return result
-    case let .TypeAsc(expr, type_):
+    case let .typeAsc(expr, type_):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["as"]
       result += prettifyType(type_)
       return result
-    case let .TypeCast(expr, type_):
+    case let .typeCast(expr, type_):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["cast"]
       result += ["as"]
       result += prettifyType(type_)
       return result
-    case let .Abstraction(listparamdecl, expr):
+    case let .abstraction(listparamdecl, expr):
       var result = [String]()
       result += ["fn"]
       result += ["("]
@@ -854,14 +854,14 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyExpr(expr)
       result += ["}"]
       return result
-    case let .Variant(stellaident, exprdata):
+    case let .variant(stellaident, exprdata):
       var result = [String]()
       result += ["<|"]
       result += [stellaident.printed]
       result += prettifyExprData(exprdata)
       result += ["|>"]
       return result
-    case let .Match(expr, listmatchcase):
+    case let .match(expr, listmatchcase):
       var result = [String]()
       result += ["match"]
       result += prettifyExpr(expr)
@@ -869,99 +869,99 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyListOfMatchCase(listmatchcase)
       result += ["}"]
       return result
-    case let .List(listexpr):
+    case let .list(listexpr):
       var result = [String]()
       result += ["["]
       result += prettifyListOfExpr(listexpr)
       result += ["]"]
       return result
-    case let .Add(expr1, expr2):
+    case let .add(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["+"]
       result += prettifyExpr(expr2)
       return result
-    case let .Subtract(expr1, expr2):
+    case let .subtract(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["-"]
       result += prettifyExpr(expr2)
       return result
-    case let .LogicOr(expr1, expr2):
+    case let .logicOr(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["or"]
       result += prettifyExpr(expr2)
       return result
-    case let .Multiply(expr1, expr2):
+    case let .multiply(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["*"]
       result += prettifyExpr(expr2)
       return result
-    case let .Divide(expr1, expr2):
+    case let .divide(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["/"]
       result += prettifyExpr(expr2)
       return result
-    case let .LogicAnd(expr1, expr2):
+    case let .logicAnd(expr1, expr2):
       var result = [String]()
       result += prettifyExpr(expr1)
       result += ["and"]
       result += prettifyExpr(expr2)
       return result
-    case let .Ref(expr):
+    case let .ref(expr):
       var result = [String]()
       result += ["new"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Deref(expr):
+    case let .deref(expr):
       var result = [String]()
       result += ["*"]
       result += prettifyExpr(expr)
       return result
-    case let .Application(expr, listexpr):
+    case let .application(expr, listexpr):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["("]
       result += prettifyListOfExpr(listexpr)
       result += [")"]
       return result
-    case let .TypeApplication(expr, listtype):
+    case let .typeApplication(expr, listtype):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["["]
       result += prettifyListOfType(listtype)
       result += ["]"]
       return result
-    case let .DotRecord(expr, stellaident):
+    case let .dotRecord(expr, stellaident):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["."]
       result += [stellaident.printed]
       return result
-    case let .DotTuple(expr, integer):
+    case let .dotTuple(expr, integer):
       var result = [String]()
       result += prettifyExpr(expr)
       result += ["."]
       result += [integer.printed]
       return result
-    case let .Tuple(listexpr):
+    case let .tuple(listexpr):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfExpr(listexpr)
       result += ["}"]
       return result
-    case let .Record(listbinding):
+    case let .record(listbinding):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfBinding(listbinding)
       result += ["}"]
       return result
-    case let .ConsList(expr1, expr2):
+    case let .consList(expr1, expr2):
       var result = [String]()
       result += ["cons"]
       result += ["("]
@@ -970,39 +970,39 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyExpr(expr2)
       result += [")"]
       return result
-    case let .Head(expr):
+    case let .head(expr):
       var result = [String]()
       result += ["List::head"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .IsEmpty(expr):
+    case let .isEmpty(expr):
       var result = [String]()
       result += ["List::isempty"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Tail(expr):
+    case let .tail(expr):
       var result = [String]()
       result += ["List::tail"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case .Panic:
+    case .panic:
       var result = [String]()
       result += ["panic!"]
       return result
-    case let .Throw(expr):
+    case let .throw(expr):
       var result = [String]()
       result += ["throw"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .TryCatch(expr1, pattern, expr2):
+    case let .tryCatch(expr1, pattern, expr2):
       var result = [String]()
       result += ["try"]
       result += ["{"]
@@ -1015,7 +1015,7 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyExpr(expr2)
       result += ["}"]
       return result
-    case let .TryWith(expr1, expr2):
+    case let .tryWith(expr1, expr2):
       var result = [String]()
       result += ["try"]
       result += ["{"]
@@ -1026,56 +1026,56 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyExpr(expr2)
       result += ["}"]
       return result
-    case let .Inl(expr):
+    case let .inl(expr):
       var result = [String]()
       result += ["inl"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Inr(expr):
+    case let .inr(expr):
       var result = [String]()
       result += ["inr"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Succ(expr):
+    case let .succ(expr):
       var result = [String]()
       result += ["succ"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .LogicNot(expr):
+    case let .logicNot(expr):
       var result = [String]()
       result += ["not"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Pred(expr):
+    case let .pred(expr):
       var result = [String]()
       result += ["Nat::pred"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .IsZero(expr):
+    case let .isZero(expr):
       var result = [String]()
       result += ["Nat::iszero"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .Fix(expr):
+    case let .fix(expr):
       var result = [String]()
       result += ["fix"]
       result += ["("]
       result += prettifyExpr(expr)
       result += [")"]
       return result
-    case let .NatRec(expr1, expr2, expr3):
+    case let .natRec(expr1, expr2, expr3):
       var result = [String]()
       result += ["Nat::rec"]
       result += ["("]
@@ -1086,7 +1086,7 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += prettifyExpr(expr3)
       result += [")"]
       return result
-    case let .Fold(type_, expr):
+    case let .fold(type_, expr):
       var result = [String]()
       result += ["fold"]
       result += ["["]
@@ -1094,7 +1094,7 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += ["]"]
       result += prettifyExpr(expr)
       return result
-    case let .Unfold(type_, expr):
+    case let .unfold(type_, expr):
       var result = [String]()
       result += ["unfold"]
       result += ["["]
@@ -1102,31 +1102,31 @@ func prettifyExpr(_ node: Expr) -> [String] {
       result += ["]"]
       result += prettifyExpr(expr)
       return result
-    case .ConstTrue:
+    case .constTrue:
       var result = [String]()
       result += ["true"]
       return result
-    case .ConstFalse:
+    case .constFalse:
       var result = [String]()
       result += ["false"]
       return result
-    case .ConstUnit:
+    case .constUnit:
       var result = [String]()
       result += ["unit"]
       return result
-    case let .ConstInt(integer):
+    case let .constInt(integer):
       var result = [String]()
       result += [integer.printed]
       return result
-    case let .ConstDouble(double):
+    case let .constDouble(double):
       var result = [String]()
       result += [double.printed]
       return result
-    case let .ConstMemory(memoryaddress):
+    case let .constMemory(memoryaddress):
       var result = [String]()
       result += [memoryaddress.printed]
       return result
-    case let .Var(stellaident):
+    case let .var(stellaident):
       var result = [String]()
       result += [stellaident.printed]
       return result
@@ -1139,7 +1139,7 @@ func prettifyListOfExpr(_ list: [Expr]) -> [String] {
 
 func prettifyPatternBinding(_ node: PatternBinding) -> [String] {
   switch node {
-    case let .APatternBinding(pattern, expr):
+    case let .aPatternBinding(pattern, expr):
       var result = [String]()
       result += prettifyPattern(pattern)
       result += ["="]
@@ -1158,7 +1158,7 @@ func prettifyListOfExpr2(_ list: [Expr]) -> [String] {
 
 func prettifyType(_ node: Type_) -> [String] {
   switch node {
-    case let .TypeFun(listtype, type_):
+    case let .typeFun(listtype, type_):
       var result = [String]()
       result += ["fn"]
       result += ["("]
@@ -1167,76 +1167,76 @@ func prettifyType(_ node: Type_) -> [String] {
       result += ["->"]
       result += prettifyType(type_)
       return result
-    case let .TypeForAll(liststellaident, type_):
+    case let .typeForAll(liststellaident, type_):
       var result = [String]()
       result += ["forall"]
       result += prettifyListOfStellaIdent(liststellaident)
       result += ["."]
       result += prettifyType(type_)
       return result
-    case let .TypeRec(stellaident, type_):
+    case let .typeRec(stellaident, type_):
       var result = [String]()
       result += ["µ"]
       result += [stellaident.printed]
       result += ["."]
       result += prettifyType(type_)
       return result
-    case let .TypeSum(type1, type2):
+    case let .typeSum(type1, type2):
       var result = [String]()
       result += prettifyType(type1)
       result += ["+"]
       result += prettifyType(type2)
       return result
-    case let .TypeTuple(listtype):
+    case let .typeTuple(listtype):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfType(listtype)
       result += ["}"]
       return result
-    case let .TypeRecord(listrecordfieldtype):
+    case let .typeRecord(listrecordfieldtype):
       var result = [String]()
       result += ["{"]
       result += prettifyListOfRecordFieldType(listrecordfieldtype)
       result += ["}"]
       return result
-    case let .TypeVariant(listvariantfieldtype):
+    case let .typeVariant(listvariantfieldtype):
       var result = [String]()
       result += ["<|"]
       result += prettifyListOfVariantFieldType(listvariantfieldtype)
       result += ["|>"]
       return result
-    case let .TypeList(type_):
+    case let .typeList(type_):
       var result = [String]()
       result += ["["]
       result += prettifyType(type_)
       result += ["]"]
       return result
-    case .TypeBool:
+    case .typeBool:
       var result = [String]()
       result += ["Bool"]
       return result
-    case .TypeNat:
+    case .typeNat:
       var result = [String]()
       result += ["Nat"]
       return result
-    case .TypeUnit:
+    case .typeUnit:
       var result = [String]()
       result += ["Unit"]
       return result
-    case .TypeTop:
+    case .typeTop:
       var result = [String]()
       result += ["Top"]
       return result
-    case .TypeBottom:
+    case .typeBottom:
       var result = [String]()
       result += ["Bot"]
       return result
-    case let .TypeRef(type_):
+    case let .typeRef(type_):
       var result = [String]()
       result += ["&"]
       result += prettifyType(type_)
       return result
-    case let .TypeVar(stellaident):
+    case let .typeVar(stellaident):
       var result = [String]()
       result += [stellaident.printed]
       return result
@@ -1249,7 +1249,7 @@ func prettifyListOfType(_ list: [Type_]) -> [String] {
 
 func prettifyVariantFieldType(_ node: VariantFieldType) -> [String] {
   switch node {
-    case let .AVariantFieldType(stellaident, optionaltyping):
+    case let .aVariantFieldType(stellaident, optionaltyping):
       var result = [String]()
       result += [stellaident.printed]
       result += prettifyOptionalTyping(optionaltyping)
@@ -1263,7 +1263,7 @@ func prettifyListOfVariantFieldType(_ list: [VariantFieldType]) -> [String] {
 
 func prettifyRecordFieldType(_ node: RecordFieldType) -> [String] {
   switch node {
-    case let .ARecordFieldType(stellaident, type_):
+    case let .aRecordFieldType(stellaident, type_):
       var result = [String]()
       result += [stellaident.printed]
       result += [":"]
@@ -1278,7 +1278,7 @@ func prettifyListOfRecordFieldType(_ list: [RecordFieldType]) -> [String] {
 
 func prettifyTyping(_ node: Typing) -> [String] {
   switch node {
-    case let .ATyping(expr, type_):
+    case let .aTyping(expr, type_):
       var result = [String]()
       result += prettifyExpr(expr)
       result += [":"]
